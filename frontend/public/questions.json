@@ -1,0 +1,18 @@
+[
+    { "category": "O_score", "question": "Lubię próbować nowych rzeczy." },
+    { "category": "O_score", "question": "Jestem kreatywny/a w rozwiązywaniu problemów." },
+    { "category": "O_score", "question": "Interesuje mnie sztuka, muzyka lub literatura." },
+    { "category": "C_score", "question": "Zawsze staram się wykonać wszystkie zadania na czas." },
+    { "category": "C_score", "question": "Jestem dobrze zorganizowany/a." },
+    { "category": "C_score", "question": "Lubię, gdy wszystko jest zaplanowane i uporządkowane." },
+    { "category": "E_score", "question": "Czuję się energiczny/a, będąc wokół ludzi." },
+    { "category": "E_score", "question": "Lubię być w centrum uwagi." },
+    { "category": "E_score", "question": "Często rozmawiam z nieznajomymi." },
+    { "category": "A_score", "question": "Staram się pomagać innym, gdy tylko mogę." },
+    { "category": "A_score", "question": "Lubię, gdy wszyscy się dogadują." },
+    { "category": "A_score", "question": "Uważam się za osobę przyjacielską i życzliwą." },
+    { "category": "N_score", "question": "Często czuję się zestresowany/a." },
+    { "category": "N_score", "question": "Łatwo wpadam w złość lub irytację." },
+    { "category": "N_score", "question": "Często martwię się o różne rzeczy." }
+  ]
+  
