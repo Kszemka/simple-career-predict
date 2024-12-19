@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ResultCard from "./components/ResultCard";
+import StartCard from "./components/StartCard";
 function App() {
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [result, setResult] = useState("");
   const [step, setStep] = useState("start"); // "start", "quiz", "result"
 
   const scale = [1, 2, 3, 4, 5]; // Scale for responses
 
   useEffect(() => {
+    setErrorMessage(null);
     fetchQuestions();
   }, []);
 
@@ -25,6 +28,9 @@ function App() {
       .then((data) => {
         const shuffled = [...data].sort(() => Math.random() - 0.5);
         setQuestions(shuffled);
+        if (shuffled.length === 0) {
+          throw new Error("No questions");
+        }
 
         const initialResponses = shuffled.reduce((acc, { category }, index) => {
           acc[index] = null;
@@ -34,6 +40,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Error loading questions:", error);
+        setErrorMessage("Błąd podczas pobierania pytań");
       });
   };
 
@@ -43,7 +50,6 @@ function App() {
     setResponses(newResponses);
     setErrorMessage("");
   };
-
   const allAnswered = Object.values(responses).every((response) => response !== null);
   const handleSubmit = async () => {
     const featureOrder = ["O_score", "C_score", "E_score", "A_score", "N_score"];
@@ -56,21 +62,26 @@ function App() {
       formattedResponses[category].push(responses[index]);
     });
 
-    try {
-      const response = await fetch("/submit_scores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formattedResponses),
+    fetch("/submit_scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formattedResponses),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setResult(data.predicted_career);
+        setStep("result");
+      })
+      .catch((error) => {
+        console.error("Error submitting scores:", error);
       });
-
-      const data = await response.json();
-      setResult(data.predicted_career);
-      setStep("result");
-    } catch (error) {
-      console.error("Error submitting scores:", error);
-    }
     // setResult("Zawód rodziców");
     // setStep("result");
   };
@@ -90,98 +101,83 @@ function App() {
   const handleRestart = () => {
     location.reload();
   };
-
-  if (step === "start") {
-    return (
-      <div className="app">
-        <div className="container mt-5 text-center d-flex flex-column justify-content-center align-items-center">
-          <h1>Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h1>
-          <div className="card p-4 mt-5" style={{ width: "50rem" }}>
-            <h5 className="pt-2 mb-4">O projekcie</h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec leo quam, eleifend vitae sapien sed, porttitor porta quam. Integer tortor metus, venenatis sit amet ligula ac, interdum
-              cursus ante. Cras quis ante eget erat placerat varius a sit amet quam.
-            </p>
-            <div className="pt-5">
-              <button className="btn btn-primary btn-lg" onClick={() => setStep("quiz")}>
-                Rozpocznij test
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === "result") {
-    return (
-      <div className="app">
-        <div className="container mt-5 text-center d-flex flex-column justify-content-center align-items-center">
-          <h1>Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h1>
-          <div className="card p-4 mt-5" style={{ width: "50rem" }}>
-            <h5 className="pt-2 mb-4">Najbardziej odpowiedni zawód</h5>
-            <h3 className="py-4 text-success">{result}</h3>
-            <div>
-              <button className="btn btn-primary mt-4 btn-lg" onClick={handleRestart}>
-                Od nowa
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   const currentQuestion = questions[currentQuestionIndex] || 0;
   return (
-    <div className="App">
-      <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
-        <h1 className="text-center">Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h1>
-        <div className="card p-4 mt-5" style={{ width: "50rem" }}>
-          <h5>
-            Pytanie {currentQuestionIndex + 1} / {questions.length}
-          </h5>
-          <p>{currentQuestion.question}</p>
-          <form>
-            <div className="d-flex align-items-center justify-content-around mb-3">
-              <label>Nie zgadzam się</label>
-              <div className="d-flex justify-content-center">
-                {scale.map((number) => (
-                  <div key={number} className="form-check mx-2">
-                    <input
-                      type="radio"
-                      name={`question-${currentQuestionIndex}`}
-                      className="form-check-input"
-                      id={`option-${number}`}
-                      value={number}
-                      checked={responses[currentQuestionIndex] === number}
-                      onChange={() => handleRadioChange(currentQuestionIndex, number)}
-                    />
-                    <label className="form-check-label" htmlFor={`option-${number}`}>
-                      {number}
+    <>
+      {step === "start" && <StartCard click={() => setStep("quiz")} error={errorMessage} />}
+      {step === "result" && <ResultCard result={result} handleRestart={handleRestart} />}
+      {step === "quiz" && (
+        <div className="App">
+          <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
+            <h1 className="text-center">Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h1>
+            <div className="card p-4 mt-5 shadow border border-0" style={{ width: "50rem" }}>
+              <div className="card-body">
+                <h6 className="d-flex pb-5">
+                  <div>Pytanie</div>
+                  <div className="text-center" style={{ width: "2rem" }}>
+                    {currentQuestionIndex + 1}
+                  </div>
+                  /
+                  <div className="text-center" style={{ width: "2rem" }}>
+                    {questions.length}
+                  </div>
+                </h6>
+                <h5 className="text-center pb-5">{currentQuestion.question}</h5>
+                <form className="pb-2">
+                  <div className="d-flex align-items-center justify-content-center gap-4">
+                    <label className="text-right" style={{ width: "120px" }}>
+                      Nie zgadzam się
+                    </label>
+                    <div className="btn-group" role="group">
+                      {scale.map((number) => (
+                        <React.Fragment key={number}>
+                          <input
+                            type="radio"
+                            name={`question-${currentQuestionIndex}`}
+                            className="btn-check"
+                            id={`option-${number}`}
+                            value={number}
+                            autoComplete="off"
+                            checked={responses[currentQuestionIndex] === number}
+                            onChange={() => handleRadioChange(currentQuestionIndex, number)}
+                          />
+                          <label className="btn btn-outline-primary" htmlFor={`option-${number}`}>
+                            {number}
+                          </label>
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    <label className="text-left" style={{ width: "120px" }}>
+                      Zgadzam się
                     </label>
                   </div>
-                ))}
+                </form>
+                <div className="d-flex justify-content-between pt-3">
+                  <button className="btn btn-secondary" onClick={handlePrevious} disabled={currentQuestionIndex === 0}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-arrow-left-circle-fill" viewBox="0 0 18 18">
+                      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+                    </svg>
+                    <span className="mx-2">Poprzednie</span>
+                  </button>
+                  {currentQuestionIndex < questions.length - 1 ? (
+                    <button className="btn btn-primary" onClick={handleNext} disabled={responses[currentQuestionIndex] === null}>
+                      <span className="mx-2">Następne</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-arrow-right-circle-fill" viewBox="0 0 18 18">
+                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered}>
+                      Wyślij
+                    </button>
+                  )}
+                </div>
               </div>
-              <label>Zgadzam się</label>
             </div>
-          </form>
-          <div className="d-flex justify-content-between mt-4">
-            <button className="btn btn-secondary" onClick={handlePrevious} disabled={currentQuestionIndex === 0}>
-              Poprzednie
-            </button>
-            {currentQuestionIndex < questions.length - 1 ? (
-              <button className="btn btn-primary" onClick={handleNext} disabled={responses[currentQuestionIndex] === null}>
-                Następne
-              </button>
-            ) : (
-              <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered}>
-                Wyślij
-              </button>
-            )}
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
