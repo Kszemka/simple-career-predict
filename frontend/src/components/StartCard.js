@@ -4,22 +4,18 @@ import { useEffect } from "react";
 export default function StartCard({ click, error }) {
   useEffect(() => {
     if (error) {
-      notify();
+      toast.error(`${error}. Odśwież stronę.`, {
+        position: "top-right",
+        theme: "colored",
+      });
     }
   }, [error]);
-
-  const notify = () => {
-    toast.error(`${error}. Odśwież stronę.`, {
-      position: "top-right",
-      theme: "colored",
-    });
-  };
 
   return (
     <>
       <div className="app">
         <div className="container mt-5 text-center d-flex flex-column justify-content-center align-items-center">
-          <h1>Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h1>
+          <h2 style={{ width: "50rem" }}>Inteligentny Asystent do predykcji najbardziej odpowiedniego zawodu w oparciu o testy osobowości</h2>
           <div className="card p-4 mt-5 shadow border border-0" style={{ width: "50rem" }}>
             <div className="card-body">
               <h5 className="pt-2 mb-4">O projekcie</h5>
