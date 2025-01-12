@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import ResultCard from "./components/ResultCard";
 import StartCard from "./components/StartCard";
 import { ToastContainer, toast } from "react-toastify";
@@ -49,11 +50,19 @@ function App() {
 
   const handleRadioChange = (index, value) => {
     const newResponses = { ...responses };
-    newResponses[index] = value;
+    const question = questions[index];
+    if (question.keyed === "minus") {
+      // Odwróć wartość punktów
+      newResponses[index] = 6 - value;
+    } else {
+      newResponses[index] = value;
+    }
     setResponses(newResponses);
     setErrorMessage("");
   };
+
   const allAnswered = Object.values(responses).every((response) => response !== null);
+
   const handleSubmit = async () => {
     const featureOrder = ["O_score", "C_score", "E_score", "A_score", "N_score"];
     const formattedResponses = featureOrder.reduce((acc, feature) => {
@@ -93,8 +102,6 @@ function App() {
         });
       });
     setIsPending(false);
-    // setResult("Zawód rodziców");
-    // setStep("result");
   };
 
   const handleNext = () => {
@@ -151,7 +158,7 @@ function App() {
                                 id={`option-${number}`}
                                 value={number}
                                 autoComplete="off"
-                                checked={responses[currentQuestionIndex] === number}
+                                checked={currentQuestion.keyed === "minus" ? responses[currentQuestionIndex] === 6 - number : responses[currentQuestionIndex] === number}
                                 onChange={() => handleRadioChange(currentQuestionIndex, number)}
                               />
                               <label className="btn btn-outline-primary" htmlFor={`option-${number}`}>
