@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify
 import pandas as pd
+import numpy as np
 import joblib
+from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
 
-model = joblib.load('model-gen/personality_career_model.pkl')
+model = load_model('model-gen/personality_career_model_nn.keras')
 scaler = joblib.load('model-gen/scaler.pkl')
+label_encoder = joblib.load('model-gen/label_encoder.pkl')
 
 def calculate_personality_scores(responses):
     """
@@ -19,7 +22,7 @@ def calculate_personality_scores(responses):
     for category, scores in responses.items():
         if scores:
             average_score = sum(scores) / len(scores)
-            scaled_score = (average_score - 1) * (10 - 1) / (6 - 1) + 1
+            scaled_score = (average_score - 1) * (10 - 1) / (5 - 1) + 1
             personality_scores[category] = round(scaled_score, 2)
     return personality_scores
 
@@ -30,8 +33,11 @@ def predict_career(personality_scores):
     """
     input_features = pd.DataFrame([personality_scores], columns=personality_scores.keys())
     input_scaled = scaler.transform(input_features)
+
     predicted_career = model.predict(input_scaled)
-    return predicted_career[0]
+    predicted_label = np.argmax(predicted_career[0])
+    decoded_career = label_encoder.inverse_transform([predicted_label])[0]
+    return decoded_career
 
 @app.route('/submit_scores', methods=['POST'])
 def submit():

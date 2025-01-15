@@ -1,0 +1,61 @@
+[
+  { "category": "O_score", "keyed": "plus", "question": "Mam bogate słownictwo." },
+  { "category": "O_score", "keyed": "plus", "question": "Mam bujną wyobraźnię." },
+  { "category": "O_score", "keyed": "plus", "question": "Mam doskonałe pomysły." },
+  { "category": "O_score", "keyed": "plus", "question": "Szybko rozumiem różne rzeczy." },
+  { "category": "O_score", "keyed": "plus", "question": "Używam trudnych słów." },
+  { "category": "O_score", "keyed": "plus", "question": "Spędzam czas na refleksji." },
+  { "category": "O_score", "keyed": "plus", "question": "Jestem pełen/pełna pomysłów." },
+
+  { "category": "O_score", "keyed": "minus", "question": "Mam trudności ze zrozumieniem abstrakcyjnych pojęć." },
+  { "category": "O_score", "keyed": "minus", "question": "Nie interesuję się abstrakcyjnymi ideami." },
+  { "category": "O_score", "keyed": "minus", "question": "Nie mam dobrej wyobraźni." },
+
+  { "category": "C_score", "keyed": "plus", "question": "Zawsze jestem przygotowany/przygotowana." },
+  { "category": "C_score", "keyed": "plus", "question": "Zwracam uwagę na szczegóły." },
+  { "category": "C_score", "keyed": "plus", "question": "Wykonuję obowiązki od razu." },
+  { "category": "C_score", "keyed": "plus", "question": "Lubię porządek." },
+  { "category": "C_score", "keyed": "plus", "question": "Przestrzegam harmonogramu." },
+  { "category": "C_score", "keyed": "plus", "question": "Jestem dokładny/dokładna w swojej pracy." },
+
+  { "category": "C_score", "keyed": "minus", "question": "Zostawiam swoje rzeczy w różnych miejscach." },
+  { "category": "C_score", "keyed": "minus", "question": "Robię bałagan." },
+  { "category": "C_score", "keyed": "minus", "question": "Często zapominam odłożyć rzeczy na swoje miejsce." },
+  { "category": "C_score", "keyed": "minus", "question": "Unikam swoich obowiązków." },
+
+  { "category": "E_score", "keyed": "plus", "question": "Jestem duszą towarzystwa." },
+  { "category": "E_score", "keyed": "plus", "question": "Czuję się swobodnie wśród ludzi." },
+  { "category": "E_score", "keyed": "plus", "question": "Zaczynam rozmowy." },
+  { "category": "E_score", "keyed": "plus", "question": "Rozmawiam z wieloma różnymi ludźmi na imprezach." },
+  { "category": "E_score", "keyed": "plus", "question": "Nie przeszkadza mi bycie w centrum uwagi." },
+
+  { "category": "E_score", "keyed": "minus", "question": "Nie mówię zbyt dużo." },
+  { "category": "E_score", "keyed": "minus", "question": "Trzymam się w tle." },
+  { "category": "E_score", "keyed": "minus", "question": "Mam niewiele do powiedzenia." },
+  { "category": "E_score", "keyed": "minus", "question": "Nie lubię zwracać na siebie uwagi." },
+  { "category": "E_score", "keyed": "minus", "question": "Jestem cichy/cicha wśród obcych." },
+
+  { "category": "A_score", "keyed": "plus", "question": "Interesuję się ludźmi." },
+  { "category": "A_score", "keyed": "plus", "question": "Współczuję uczuciom innych." },
+  { "category": "A_score", "keyed": "plus", "question": "Mam miękkie serce." },
+  { "category": "A_score", "keyed": "plus", "question": "Poświęcam czas dla innych." },
+  { "category": "A_score", "keyed": "plus", "question": "Odczytuję emocje innych." },
+  { "category": "A_score", "keyed": "plus", "question": "Sprawiam, że ludzie czują się swobodnie." },
+
+  { "category": "A_score", "keyed": "minus", "question": "Nie interesuję się innymi." },
+  { "category": "A_score", "keyed": "minus", "question": "Obrażam ludzi." },
+  { "category": "A_score", "keyed": "minus", "question": "Nie interesują mnie problemy innych." },
+  { "category": "A_score", "keyed": "minus", "question": "Czuję niewielką troskę o innych." },
+
+  { "category": "N_score", "keyed": "plus", "question": "Większość czasu jestem zrelaksowany/zrelaksowana." },
+  { "category": "N_score", "keyed": "plus", "question": "Rzadko czuję się przygnębiony/przygnębiona." },
+
+  { "category": "N_score", "keyed": "minus", "question": "Łatwo się stresuję." },
+  { "category": "N_score", "keyed": "minus", "question": "Martwię się różnymi rzeczami." },
+  { "category": "N_score", "keyed": "minus", "question": "Łatwo mnie wyprowadzić z równowagi." },
+  { "category": "N_score", "keyed": "minus", "question": "Łatwo się denerwuję." },
+  { "category": "N_score", "keyed": "minus", "question": "Często zmieniam nastrój." },
+  { "category": "N_score", "keyed": "minus", "question": "Mam częste wahania nastroju." },
+  { "category": "N_score", "keyed": "minus", "question": "Łatwo się irytuję." },
+  { "category": "N_score", "keyed": "minus", "question": "Często czuję się przygnębiony/przygnębiona." }
+]
