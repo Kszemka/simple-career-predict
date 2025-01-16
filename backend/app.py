@@ -19,7 +19,7 @@ def calculate_personality_scores(responses):
     for category, scores in responses.items():
         if scores:
             average_score = sum(scores) / len(scores)
-            scaled_score = (average_score - 1) * (10 - 1) / (6 - 1) + 1
+            scaled_score = (average_score - 1) * (10 - 1) / (5 - 1) + 1
             personality_scores[category] = round(scaled_score, 2)
     return personality_scores
 
