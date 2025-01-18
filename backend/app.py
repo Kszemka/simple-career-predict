@@ -4,14 +4,14 @@ import joblib
 
 app = Flask(__name__)
 
-model = joblib.load('model-gen/personality_career_model.pkl')
-scaler = joblib.load('model-gen/scaler.pkl')
+model = joblib.load('model-gen/personality_career_knn_model.pkl')
+scaler = joblib.load('model-gen/scaler-knn.pkl')
 
 def calculate_personality_scores(responses):
     """
     Calculate the average personality scores based on user responses.
     `responses` should be a dictionary where keys are category names
-    and values are lists of responses (integers from 1 to 6).
+    and values are lists of responses (integers from 1 to 5).
 
     Returns a dictionary with personality scores scaled to 1-10 range.
     """
