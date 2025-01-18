@@ -5,6 +5,8 @@ import ResultCard from "./components/ResultCard";
 import StartCard from "./components/StartCard";
 import { ToastContainer, toast } from "react-toastify";
 
+const LONG_QUESTIONS = 1;
+
 function App() {
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState({});
@@ -22,7 +24,13 @@ function App() {
 
   const fetchQuestions = () => {
     setErrorMessage(null);
-    fetch("/questions.json")
+    let url;
+    if (LONG_QUESTIONS) {
+      url = "/questions_long.json";
+    } else {
+      url = "/questions.json";
+    }
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

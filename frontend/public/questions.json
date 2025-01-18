@@ -1,17 +1,12 @@
 [
   { "category": "O_score", "keyed": "plus", "question": "Lubię próbować nowych rzeczy." },
   { "category": "O_score", "keyed": "minus", "question": "Jestem kreatywny/a w rozwiązywaniu problemów." },
-  { "category": "O_score", "keyed": "minus", "question": "Interesuje mnie sztuka, muzyka lub literatura." },
   { "category": "C_score", "keyed": "plus", "question": "Zawsze staram się wykonać wszystkie zadania na czas." },
   { "category": "C_score", "keyed": "plus", "question": "Jestem dobrze zorganizowany/a." },
-  { "category": "C_score", "keyed": "plus", "question": "Lubię, gdy wszystko jest zaplanowane i uporządkowane." },
   { "category": "E_score", "keyed": "plus", "question": "Czuję się energiczny/a, będąc wokół ludzi." },
   { "category": "E_score", "keyed": "plus", "question": "Lubię być w centrum uwagi." },
-  { "category": "E_score", "keyed": "plus", "question": "Często rozmawiam z nieznajomymi." },
   { "category": "A_score", "keyed": "plus", "question": "Staram się pomagać innym, gdy tylko mogę." },
   { "category": "A_score", "keyed": "plus", "question": "Lubię, gdy wszyscy się dogadują." },
-  { "category": "A_score", "keyed": "plus", "question": "Uważam się za osobę przyjacielską i życzliwą." },
   { "category": "N_score", "keyed": "plus", "question": "Często czuję się zestresowany/a." },
-  { "category": "N_score", "keyed": "plus", "question": "Łatwo wpadam w złość lub irytację." },
-  { "category": "N_score", "keyed": "plus", "question": "Często martwię się o różne rzeczy." }
+  { "category": "N_score", "keyed": "plus", "question": "Łatwo wpadam w złość lub irytację." }
 ]
